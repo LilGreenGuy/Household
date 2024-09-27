@@ -1,0 +1,51 @@
+body {
+    background: linear-gradient(180deg, rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.5)), 
+    url("https://images.unsplash.com/photo-1486607303850-bc051a4ffad4?q=80&w=3548&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D") 
+    center no-repeat fixed;
+    background-size: cover;
+}
+
+.rentDesc {
+    border-bottom: 1px solid black;
+    margin-bottom: 0.5rem;
+    padding-bottom: 0.5rem;
+}
+
+.rentDesc:last-of-type {
+    border-bottom: none;
+    margin-bottom: 0;
+}
+
+.nav-link {
+    padding: 0.25rem 0;
+    font-weight: 700;
+    color: rgba(255,255,255,0.5);
+    margin-left: 1rem;
+    border-bottom: 0.25rem solid transparent;
+}
+
+.nav-link:hover{
+    color: rgba(255,255,255,0.5);
+    border-bottom-color:rgba(255,255,255,0.5);
+}
+
+.nav-link.active {
+    color: white;
+    border-bottom-color:white;
+}
+
+#navbar,
+#footer {
+    background-color: rgba(33, 37, 41, 0.7);
+    transition: all .5s;
+}
+
+#navbar:hover {
+    background-color: rgba(33, 37, 41, 1);
+}
+
+#totalCard,
+#inputCard,
+#historyCard {
+    background-color: rgba(33, 37, 31, 80%);
+}
