@@ -11,12 +11,18 @@
    integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
    crossorigin="anonymous"></script>
    <link rel="stylesheet" href="/css/living-expenses.css">
+   <link rel="stylesheet" href="/css/home.css">
 </head>
 
 <body class="d-flex flex-column vh-100">
     <%- include('./partials/navbar') %>
-        <main class="container mt-3">
-            <h1>WIP</h1>
+        <main class="container m-auto px-3 text-center text-white">
+            <section class="mx-auto py-5 w-75 rounded-4" id="homeCard">
+                <h1>Rent Tracker</h1>
+                <p class="lead">Welcome to Rent Tracker <br> Keep track of and manage your monthly living expenses! <br>
+                    Add your roomates or spouse to your household and keep track of and split your bills.</p>
+                <a href="/living-expenses" class="btn btn-lg btn-secondary font-weight-bold border-white bg-white">View your Household!</a>
+            </section>        
         </main>
         <%- include('./partials/footer') %>
             <script src="/js/validateForms.js"></script>

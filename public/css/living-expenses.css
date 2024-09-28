@@ -36,7 +36,6 @@ body {
 
 #navbar,
 #footer {
-    background-color: rgba(33, 37, 41, 0.7);
     transition: all .5s;
 }
 
@@ -46,6 +45,9 @@ body {
 
 #totalCard,
 #inputCard,
-#historyCard {
-    background-color: rgba(33, 37, 31, 80%);
+#historyCard,
+#homeCard,
+#navbar,
+#footer {
+    background-color: rgba(33, 37, 41, 0.7);
 }

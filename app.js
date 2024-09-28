@@ -49,10 +49,6 @@ app.get('/', (req, res) => {
     res.render('home', {page_name: 'Home'});
 })
 
-app.get('/about', (req, res) => {
-    res.render('about', {page_name: 'About'});
-})
-
 app.use('/living-expenses', livingExpensesRoutes);
 
 // Error handling
