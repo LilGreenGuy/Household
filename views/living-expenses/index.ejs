@@ -21,17 +21,11 @@
                 <div class="card shadow mb-3 text-white" id="totalCard">
                     <div class="card-body">
                         <h2 class="card-title border-bottom pb-3 month">Living Expenses</h2>
-                        <h3 class="card-text mb-3">
-                            <% let rentTotal=0; %>
-                                <% for(let rentItem of rentItems) {%>
-                                    <%rentTotal +=rentItem.cost %>
-                                        <% } %>
-                                            Total: $<%=rentTotal %>
-                        </h3>
+                        <h3 class="card-text mb-3">Total: $<%=currentMonth.rentTotal %></h3>
 
                         <div class="accordion" id="accordionExample">
-                            <% if(rentItems) { %>
-                                <% for(let rentItem of rentItems) {%>
+                            <% if(currentMonth.rentItems) { %>
+                                <% for(let rentItem of currentMonth.rentItems) {%>
                                     <div class="accordion-item">
                                         <h2 class="accordion-header">
                                             <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
@@ -100,7 +94,6 @@
                     <div class="card-body ">
                         <h2 class="card-title border-bottom pb-2 mb-3">Previous Month Summeries</h2>
                         <div class="accordion " id="accordion">
-                            <% let pastRentTotal=0; %>
                                 <% for(let rentMonth of rentMonths.reverse().slice(1)) {%>
                                     <div class="accordion-item bg-secondary-subtle">
                                         <h2 class="accordion-header">
@@ -118,10 +111,9 @@
                                             class="accordion-collapse collapse" data-bs-parent="#accordion">
                                             <div class="accordion-body">
                                                 <% for(let rentItem of rentMonth.rentItems) {%>
-                                                    <%pastRentTotal +=rentItem.cost %>
                                                         <% } %>
                                                             <h4 class="border-bottom pb-3">
-                                                                Total: $<%=pastRentTotal %>
+                                                                Total: $<%=rentMonth.rentTotal %>
                                                             </h4>
                                                             <% for(let rentItem of rentMonth.rentItems) {%>
                                                                 <h5 class="d-inline">

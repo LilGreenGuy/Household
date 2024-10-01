@@ -1,5 +1,4 @@
 const mongoose = require('mongoose');
-const RentItem = require('./RentItem');
 const Schema = mongoose.Schema;
 
 const rentMonthSchema = new Schema({
@@ -10,7 +9,11 @@ const rentMonthSchema = new Schema({
             type: Schema.Types.ObjectId,
             ref: 'RentItem'
         }
-    ]
+    ],
+    rentTotal: {
+        type: Number,
+        default: 0
+    }
 });
 
 module.exports = mongoose.model('RentMonth', rentMonthSchema);
