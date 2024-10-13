@@ -9,6 +9,7 @@ module.exports.renderLivingExpenses = async (req, res) => {
 }
 
 module.exports.createLivingExpense = async (req, res) => {
+    console.log(req)
     const rentItem = new RentItem(req.body.rentItem);
     const rentMonth = await RentMonth.findOne({ month: getCurrentMonth() });
     rentMonth.rentTotal += rentItem.cost

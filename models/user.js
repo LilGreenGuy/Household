@@ -16,12 +16,12 @@ const UserSchema = new Schema({
         type: String,
         required: true,
         unique: true
-    },    
-    displayname: {
-        type: String,
-        required: true,
     },
     image: ImageSchema,
+    household: {
+        type: Schema.Types.ObjectId,
+            ref: 'Household'
+    }
 });
 
 UserSchema.plugin(passportLocalMongoose);

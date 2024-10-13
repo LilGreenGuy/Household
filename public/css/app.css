@@ -48,7 +48,18 @@ body {
 #historyCard,
 #homeCard,
 #navbar,
-#footer {
+#footer,
+#register,
+#newHousehold {
     background-color: rgba(33, 37, 41, 0.7);
 }
 
+#headers {
+    opacity: 0;
+    transition: opacity 1s;
+}
+
+#newHousehold {
+    opacity: 0;
+    transition: all 1s;
+}

@@ -6,14 +6,19 @@ const addressSchema = new Schema({
     street2: String,
     city: String,
     state: String,
-    zipcode: String
+    zipcode: String,
+    country: {
+        type: String,
+        default: "United States"
+    }
   });  
 
-  const recurringExpenses = new Schema({
+  const recurringExpenseSchema = new Schema({
     reason: String,
     cost: Number,
     desc: String
   })
+
 
 const household = new Schema({
     name:
@@ -21,18 +26,13 @@ const household = new Schema({
         type: String,
         default: "Home"
     },
-    mainUsers:
-        [{
-            type: Schema.Types.ObjectId,
-            ref: 'User'
-        }],
     users:
         [{
             type: Schema.Types.ObjectId,
             ref: 'User'
         }],
     address: addressSchema,
-    recurringExpenses: [recurringExpenses],
+    recurringExpenses: [recurringExpenseSchema],
     rentYears:
         [{
             type: Schema.Types.ObjectId,
