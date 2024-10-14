@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const { isLoggedIn, checkCurrentYear, checkCurrentMonth } = require('../middleware');
+const { isLoggedIn, checkCurrentYear, checkCurrentMonth, isHouseholdUser } = require('../middleware');
 const household = require('../controllers/household');
 const catchAsync = require('../utils/catchAsync');
 
@@ -12,6 +12,6 @@ router.route('/new')
     .get(isLoggedIn, household.renderNewForm)
 
 router.route('/:id')
-    .get(isLoggedIn, checkCurrentYear, checkCurrentMonth, catchAsync(household.showHousehold))
+    .get(isLoggedIn, checkCurrentYear, checkCurrentMonth, isHouseholdUser, catchAsync(household.showHousehold))
 
 module.exports = router;

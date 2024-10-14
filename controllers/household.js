@@ -4,9 +4,7 @@ const User = require('../models/user')
 
 module.exports.index = async (req, res) => {
     const user = req.user
-    const household = await Household.findOne({
-         users: user._id 
-        })
+    const household = await Household.findOne({ users: user._id })
     res.redirect(`/household/${household._id}`)
 }
 
@@ -26,7 +24,7 @@ module.exports.createHousehold = async (req, res) => {
 
 module.exports.showHousehold = async (req, res) => {
     const { id } = req.params;
-    const household = await Household.findById(id).populate('users');
+    const household = await Household.findById(id).populate({path: 'users'});
     const rentYears = await RentYear.find({ household });
     res.render(`household/show`, { household, rentYears, page_name: "Household" })
 }

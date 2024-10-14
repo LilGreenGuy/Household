@@ -1,9 +1,10 @@
 <% layout('layouts/boilerplate') %>
         <div class="row">
             <div class="col-lg-6 col-sm-10 offset-lg-0 offset-sm-1">
-                <div class="card shadow mb-3 text-white" id="totalCard">
+                <div class="card shadow mb-3 text-white bodyCard" id="totalCard">
                     <div class="card-body">
-                        <h2 class="card-title border-bottom pb-3 month">Living Expenses</h2>
+                        <% const currentMonth=household.rentYears.at(-1).rentMonths.at(-1) %>
+                        <h2 class="card-title border-bottom pb-3 month"><%=currentMonth.month%>'s Living Expenses</h2>
                         <h3 class="card-text mb-3">Monthly Total: $<%=currentMonth.rentTotal || 0 %></h3>
 
                         <div class="accordion" id="currentMonthAccordian">
@@ -11,7 +12,7 @@
                                 <% for(let rentItem of currentMonth.rentItems) {%>
                                     <div class="accordion-item">
                                         <h2 class="accordion-header">
-                                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                                            <button class="accordion-button collapsed py-2" type="button" data-bs-toggle="collapse"
                                                 data-bs-target="#collapse<%=rentItem._id %>" aria-expanded="true"
                                                 aria-controls="collapse<%=rentItem._id %>">
                                                 <h5>
@@ -35,7 +36,7 @@
             </div>
 
             <div class="col-lg-6 col-sm-10 offset-lg-0 offset-sm-1">
-                <div class="card shadow mb-3 text-white" id="inputCard">
+                <div class="card shadow mb-3 text-white bodyCard" id="inputCard">
                     <div class="card-body">
                         <h2 class="card-title border-bottom pb-3">Add New Expense</h2>
                     </div>
@@ -73,14 +74,14 @@
 
         <div class="row">
             <div class="col-lg-12 col-sm-10 offset-lg-0 offset-sm-1">
-                <div class="card shadow text-white mt-2" id="historyCard">
+                <div class="card shadow text-white mt-2  bodyCard" id="historyCard">
                     <div class="card-body ">
-                        <h2 class="card-title border-bottom pb-2 mb-3">Previous Month Summeries</h2>
+                        <h2 class="card-title border-bottom pb-2 mb-3">Previous Month Summaries</h2>
                         <div class="accordion " id="accordion">
-                                <% for(let rentMonth of rentMonths.reverse().slice(1)) {%>
+                                <% for(let rentMonth of household.rentYears.at(-1).rentMonths.reverse().slice(1)) {%>
                                     <div class="accordion-item bg-secondary-subtle">
                                         <h2 class="accordion-header">
-                                            <button class="accordion-button collapsed" type="button"
+                                            <button class="accordion-button collapsed py-2" type="button"
                                                 data-bs-toggle="collapse"
                                                 data-bs-target="#flush-collapse<%=rentMonth.month %>"
                                                 aria-expanded="false"

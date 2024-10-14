@@ -1,21 +1,25 @@
-const RentItem = require('../models/RentItem');
-const RentMonth = require('../models/RentMonth');
+const Household = require('../models/Household')
+const RentYear = require('../models/RentYear')
 const { getCurrentMonth, getCurrentYear } = require('../utils/getCurrentDate');
 
 module.exports.renderLivingExpenses = async (req, res) => {
-    const currentMonth = await RentMonth.findOne({ month: getCurrentMonth() }).populate('rentItems');
-    const rentMonths = await RentMonth.find({}).populate('rentItems');
-    res.render('living-expenses/index', { currentMonth, rentMonths, page_name: 'Living Expenses' });
+    const user = req.user
+    const household = await Household.findOne({ users: user._id }).populate('rentYears')
+    if (!household) {
+        req.flash('error', 'You are not a part of any Household!');
+        return res.redirect('/home');
+    }
+    res.render('living-expenses/index', { household, page_name: 'Living Expenses' });
 }
 
 module.exports.createLivingExpense = async (req, res) => {
-    console.log(req)
-    const rentItem = new RentItem(req.body.rentItem);
-    const rentMonth = await RentMonth.findOne({ month: getCurrentMonth() });
-    rentMonth.rentTotal += rentItem.cost
-    rentMonth.rentItems.push(rentItem);
-    await rentMonth.save();
-    rentItem.date = new Date();
-    await rentItem.save();
+    const user = req.user;
+    rentItem = req.body.rentItem;
+    const household = await Household.findOne({ users: user._id }).populate('rentYears');
+    const rentYear = await RentYear.findOne({household: household._id});
+    rentYear.rentMonths.at(-1).rentItems.push(rentItem);
+    rentYear.rentMonths.at(-1).rentTotal += parseInt(rentItem.cost);
+    rentYear.yearlyTotal += parseInt(rentItem.cost);
+    rentYear.save();
     res.redirect('/living-expenses');
 }

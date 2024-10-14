@@ -34,6 +34,10 @@ const rentYearSchema = new Schema({
         type: Schema.Types.ObjectId,
         ref: 'Household'
     },
+    yearlyTotal: {
+        type: Number,
+        default: 0
+    },
     rentMonths: [rentMonthSchema]
 });
 

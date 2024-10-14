@@ -1,6 +1,5 @@
 const { rentItemSchema } = require('./schemas');
 const RentYear = require('./models/RentYear');
-const RentMonth = require('./models/RentMonth');
 const ExpressError = require('./utils/ExpressError');
 const { getCurrentMonth, getCurrentYear } = require('./utils/getCurrentDate');
 const Household = require('./models/Household');
@@ -41,7 +40,7 @@ module.exports.checkCurrentMonth = async (req, res, next) => {
             rentTotal: 0
         }
         currentYear.rentMonths.push(newMonth);
-        // currentYear.save();
+        currentYear.save();
     };
     return next();
 }
@@ -70,4 +69,14 @@ module.exports.checkHousehold = async (req, res, next) => {
         }
     }
     return next();
+}
+
+module.exports.isHouseholdUser = async(req, res, next) => {
+    const { id } = req.params;
+    const household = await Household.findById(id);
+    if (!household.users.includes(req.user._id)) {
+        req.flash('error', 'You do not have permission to do that!')
+        return res.redirect(`/home`)
+    }
+    next();
 }
