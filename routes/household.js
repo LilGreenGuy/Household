@@ -1,12 +1,12 @@
 const express = require('express');
 const router = express.Router();
-const { isLoggedIn, checkCurrentYear, checkCurrentMonth, isHouseholdUser } = require('../middleware');
+const { isLoggedIn, checkCurrentYear, checkCurrentMonth, checkHousehold, isHouseholdUser } = require('../middleware');
 const household = require('../controllers/household');
 const catchAsync = require('../utils/catchAsync');
 
 router.route('/')
-    .get(isLoggedIn, catchAsync(household.index))
-    .post(isLoggedIn, catchAsync(household.createHousehold));
+    .get(isLoggedIn, checkHousehold, catchAsync(household.index))
+    .post(isLoggedIn, checkHousehold, catchAsync(household.createHousehold));
 
 router.route('/new')
     .get(isLoggedIn, household.renderNewForm)

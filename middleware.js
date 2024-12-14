@@ -80,3 +80,12 @@ module.exports.isHouseholdUser = async(req, res, next) => {
     }
     next();
 }
+
+// module.exports.hasHousehold = async(req, res, next) => {
+//     const {id} = req.params;
+//     const household = await Household.findById(id);
+//     if (!household) {
+//         req.flash('error', 'You need to finish creating a Household!')
+
+//     }
+// }

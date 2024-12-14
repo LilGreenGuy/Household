@@ -23,7 +23,7 @@ const removeHeaders = (delay) => {
 async function changeTextOpacity() {
     await delayedTextCrawl(headers, 1000)
     await delayedTextCrawl(headers, 2000)
-    await removeHeaders(1000)
+    removeHeaders(1000)
     await delayedTextCrawl(formCard, 1000)
 }
 

@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 const catchAsync = require('../utils/catchAsync');
 const passport = require('passport');
-const { storeReturnTo } = require('../middleware');
+const { storeReturnTo, isLoggedIn } = require('../middleware');
 const user = require('../controllers/user');
 
 
@@ -15,6 +15,10 @@ router.route('/login')
     .post(storeReturnTo,
         passport.authenticate('local',
             { failureFlash: true, failureRedirect: '/login' }), user.login);
+
+router.route('/profile')
+    .get(isLoggedIn, catchAsync(user.renderProfile))
+    .put(isLoggedIn, catchAsync(user.updateProfile));
 
 router.get('/logout', user.logout);
 

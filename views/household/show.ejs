@@ -10,12 +10,14 @@
                         <%=household.address.street%>
                             <%=household.address.street2%>
                     </h2>
-                    <h3 class="card-subtitle border-bottom pb-3">
+                    <h3 class="card-subtitle border-bottom pb-3 mb-3">
                         <%=household.address.city%>
                             <%=household.address.state%>
                                 <%=household.address.zipcode%>
                     </h3>
-                    <div style="height: 300px;"></div>
+                    <div  style="height: 300px;">
+                        <canvas id="expensesChart"></canvas>
+                    </div>
                 </div>
             </div>
         </section>
@@ -28,7 +30,7 @@
                     </h4>
                     <ul class="list-group my-3">
                         <% for(let user of household.users) {%>
-                            <li class=" list-group-item">
+                            <li class="list-group-item">
                                 <%=user.username %>
                             </li>
                             <% } %>
@@ -53,41 +55,42 @@
             <div class="card mb-3 text-white h-100 bodyCard" id="totalCard">
                 <div class="card-body d-flex flex-column ">
                     <% const currentMonth=rentYears.at(-1).rentMonths.at(-1) %>
-                            <h2 class="card-title border-bottom pb-3 month"><%=currentMonth.month%>'s Living Expenses</h2>
-                            <h3 class="card-text mb-3">Monthly Total: $<%= currentMonth.rentTotal || 0 %>
-                            </h3>
+                        <h2 class="card-title border-bottom pb-3 month">
+                            <%=currentMonth.month%>'s Living Expenses
+                        </h2>
+                        <h3 class="card-text mb-3">Monthly Total: $<%= currentMonth.rentTotal || 0 %>
+                        </h3>
 
-                            <div class="accordion border-bottom pb-3" id="currentMonthAccordian">
-                                <% if(currentMonth.rentItems) { %>
-                                    <% for(let rentItem of currentMonth.rentItems) {%>
-                                        <div class="accordion-item">
-                                            <h4 class="accordion-header">
-                                                <button class="accordion-button collapsed py-2" type="button"
-                                                    data-bs-toggle="collapse"
-                                                    data-bs-target="#collapse<%=rentItem._id %>" aria-expanded="true"
-                                                    aria-controls="collapse<%=rentItem._id %>">
-                                                    <h5>
-                                                        <%=rentItem.reason%>: $<%=rentItem.cost %>
-                                                    </h5>
-                                                </button>
-                                            </h4>
-                                            <div id="collapse<%=rentItem._id %>" class="accordion-collapse collapse"
-                                                data-bs-parent="#currentMonthAccordian">
-                                                <div class="accordion-body">
-                                                    <p>
-                                                        <%=rentItem.date %>
-                                                    </p>
-                                                    <p>
-                                                        <%=rentItem.desc %>
-                                                    </p>
-                                                </div>
+                        <div class="accordion border-bottom pb-3" id="currentMonthAccordian">
+                            <% if(currentMonth.rentItems) { %>
+                                <% for(let rentItem of currentMonth.rentItems) {%>
+                                    <div class="accordion-item">
+                                        <h4 class="accordion-header">
+                                            <button class="accordion-button collapsed py-2" type="button"
+                                                data-bs-toggle="collapse" data-bs-target="#collapse<%=rentItem._id %>"
+                                                aria-expanded="true" aria-controls="collapse<%=rentItem._id %>">
+                                                <h5>
+                                                    <%=rentItem.reason%>: $<%=rentItem.cost %>
+                                                </h5>
+                                            </button>
+                                        </h4>
+                                        <div id="collapse<%=rentItem._id %>" class="accordion-collapse collapse"
+                                            data-bs-parent="#currentMonthAccordian">
+                                            <div class="accordion-body">
+                                                <p>
+                                                    <%=rentItem.date %>
+                                                </p>
+                                                <p>
+                                                    <%=rentItem.desc %>
+                                                </p>
                                             </div>
                                         </div>
+                                    </div>
+                                    <% } %>
                                         <% } %>
-                                            <% } %>
-                            </div>
-                            <p class="my-3 ms-auto">Missing an expense?</p>
-                            <a class="btn btn-primary ms-auto w-25" href="/living-expenses">Add one here</a>
+                        </div>
+                        <p class="my-3 ms-auto">Missing an expense?</p>
+                        <a class="btn btn-primary ms-auto w-25" href="/living-expenses">Add one here</a>
                 </div>
             </div>
         </section>
@@ -100,9 +103,9 @@
                         <% for(let rentYear of rentYears.reverse()) {%>
                             <div class="accordion-item bg-secondary-subtle">
                                 <h2 class="accordion-header">
-                                    <button class="accordion-button collapsed py-2" type="button" data-bs-toggle="collapse"
-                                        data-bs-target="#flush-collapse<%=rentYear.year %>" aria-expanded="false"
-                                        aria-controls="flush-collapse<%=rentYear.year %>">
+                                    <button class="accordion-button collapsed py-2" type="button"
+                                        data-bs-toggle="collapse" data-bs-target="#flush-collapse<%=rentYear.year %>"
+                                        aria-expanded="false" aria-controls="flush-collapse<%=rentYear.year %>">
                                         <h3>
                                             <%=rentYear.year %>: $<%=rentYear.yearlyTotal %>
                                         </h3>
@@ -126,3 +129,34 @@
             </div>
         </section>
     </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.7/dist/chart.umd.min.js"></script>
+    <script defer>
+        const ctx = document.getElementById('expensesChart');
+        const SALARY = <%- JSON.stringify(salary)%>;
+        const RENTYEARS = <%- JSON.stringify(rentYears) %>;
+
+        new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: RENTYEARS[0].rentMonths.map((month) => month.month),
+                datasets : [{
+                    label: 'Expenses by Month',
+                    data: RENTYEARS[0].rentMonths.map((month) => month.rentTotal),
+                    borderWidth: 1
+                },{
+                    label: 'Salary by Month',
+                    data: SALARY.map((sal) => sal),
+                    borderWidth: 1
+                }]
+            },
+            options: {
+              scales: {
+                y: {
+                  beginAtZero: true
+                }
+              }
+            }
+        })
+
+    </script>

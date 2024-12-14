@@ -1,0 +1,97 @@
+<% layout('layouts/boilerplate') %>
+    <div class="row gy-3">
+        <!-- <section class="col-xl-12">
+            <div class="card h-100 shadow bodyCard text-white">
+                <div class="card-body">
+                        <h1 class="card-title border-bottom pb-3">Edit your Profile Info</h1>
+                        <form method="POST" action="/profile" class="row g-3 validated-form" novalidate>
+                            <div class="col-xl-6 mb-3">
+                                <label for="name" class="form-label">Household Name</label>
+                                <input type="text" class="form-control" id="name" placeholder="Home" value="<%= household.name %>"
+                                    name="household[name]">
+                            </div>
+                            <div class="col-xl-7">
+                                <label for="inputAddress" class="form-label">Address</label>
+                                <input type="text" class="form-control" id="inputAddress" placeholder="1234 Main St"
+                                    name="address[street]" value="<%=household.address.street%>">
+                            </div>
+                            <div class="col-xl-5">
+                                <label for="inputAddress2" class="form-label">Address 2</label>
+                                <input type="text" class="form-control" id="inputAddress2"
+                                    placeholder="Apartment, studio, or floor" name="address[street2]" value="<%=household.address.street2%>">
+                            </div>
+                            <div class="col-md-6">
+                                <label for="inputCity" class="form-label">City</label>
+                                <input type="text" class="form-control" id="inputCity" name="address[city]" value="<%=household.address.city%>">
+                                <div class="invalid-feedback">Please Enter a City!</div>
+                            </div>
+                            <div class="col-md-4">
+                                <label for="inputState" class="form-label">State</label>
+                                <select id="inputState" class="form-select" name="address[state]">
+                                    <option value="">Choose Your State</option>
+                                </select>
+                                <div class="invalid-feedback">Please Select a State!</div>
+                            </div>
+                            <div class="col-md-2">
+                                <label for="inputZip" class="form-label">Zip</label>
+                                <input type="text" class="form-control" id="inputZip" name="address[zipcode]" value="<%=household.address.zipcode%>">
+                                <div class="invalid-feedback">Please Enter a Zipcode</div>
+                            </div>
+                            <div class="col-12 justify-content-end">
+                                <button type="submit" class="btn btn-success btn-block mb-3 mt-3">Submit</button>
+                            </div>
+                        </form>
+                </div>
+            </div>
+        </section> -->
+
+        <section class="col-xl-6">
+            <div class="card h-100 shadow bodyCard text-white">
+                <div class="card-body">
+                    <h2 class="card-title border-bottom pb-3 mb-3">Edit your Info</h1>
+                        <form method="POST" action="/profile?_method=PUT">
+                            <div class="form-floating mb-3">
+                              <input type="text" class="form-control" id="displayname" name="displayname" placeholder="<%=user.displayname%>">
+                              <label for="displayname" class="form-label text-secondary">Real Name</label>
+                            </div>
+                            <div class="form-floating mb-3">
+                                <input type="email" class="form-control" id="email" placeholder="<%=user.email%>" name="email">
+                                <label for="email" class="form-label text-secondary">Email address</label>
+                              </div>
+                              <div class="form-floating">
+                                <input type="number" class="form-control" id="salary" placeholder="" name="salary">
+                                <label for="salary" class="form-label text-secondary">Net Income</label>
+                                <div id="reasonHelp" class="form-text text-info">Net income is income after taxes, deductions, etc</div>
+                              </div>
+                            <button type="submit" class="btn btn-primary">Edit Profile</button>
+                        </form>
+                </div>
+            </div>
+        </section>
+
+        <section class="col-xl-6">
+            <div class="card h-100 shadow bodyCard text-white">
+                <div class="card-body">
+                    <h2 class="card-title border-bottom pb-3 mb-3">Change your password</h1>
+                        <form method="POST" action="/user?_method=PUT">
+                            <div class="form-floating mb-3">
+                                <input type="password" class="form-control" id="currentPassword" name="currentPassword"
+                                    required>
+                                    <label for="currentPassword" class="form-label text-secondary">Password</label>
+                            </div>
+                            <div class="form-floating mb-3">
+                                <input type="password" class="form-control" id="vertifyPassword" name="verifiedPassword"
+                                    required>
+                                    <label for="vertifyPassword" class="form-label text-secondary">Verify Password</label>
+                            </div>
+                            <div class="form-floating mb-3">
+                                <input type="password" class="form-control" id="password" name="password" required>
+                                <label for="password" class="form-label text-secondary">New Password</label>
+                            </div>
+                            <button type="submit" class="btn btn-success">Change Password</button>
+                        </form>
+                </div>
+            </div>
+        </section>
+    </div>
+    <script src="/js/states.js"></script>
