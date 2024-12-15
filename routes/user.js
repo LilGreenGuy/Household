@@ -20,6 +20,9 @@ router.route('/profile')
     .get(isLoggedIn, catchAsync(user.renderProfile))
     .put(isLoggedIn, catchAsync(user.updateProfile));
 
+router.route('/password')
+    .put(catchAsync(user.updatePassword))
+
 router.get('/logout', user.logout);
 
 module.exports = router;

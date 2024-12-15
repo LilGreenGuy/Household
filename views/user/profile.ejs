@@ -73,14 +73,14 @@
             <div class="card h-100 shadow bodyCard text-white">
                 <div class="card-body">
                     <h2 class="card-title border-bottom pb-3 mb-3">Change your password</h1>
-                        <form method="POST" action="/user?_method=PUT">
+                        <form method="POST" action="/password?_method=PUT">
                             <div class="form-floating mb-3">
                                 <input type="password" class="form-control" id="currentPassword" name="currentPassword"
                                     required>
                                     <label for="currentPassword" class="form-label text-secondary">Password</label>
                             </div>
                             <div class="form-floating mb-3">
-                                <input type="password" class="form-control" id="vertifyPassword" name="verifiedPassword"
+                                <input type="password" class="form-control" id="verifyPassword" name="verifyPassword"
                                     required>
                                     <label for="vertifyPassword" class="form-label text-secondary">Verify Password</label>
                             </div>
@@ -93,5 +93,5 @@
                 </div>
             </div>
         </section>
+        
     </div>
-    <script src="/js/states.js"></script>

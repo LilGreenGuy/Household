@@ -32,7 +32,9 @@ There's a landing page currently, but it's a pretty basic static text scrawl and
 
 The first section allows a user to change their "Real Name" (which is really just a display name) and their salary.
 
-The second section allows a user to change their password by taking in a new password the user desires, their old password, and their old password again to verify they typed it in correctly. 
+The second section allows a user to change their password by taking in a new password the user desires, their old password, and their old password again to verify they typed it in correctly. It has some checks to make sure the user isn't inputting their old password as a new password. It uses passport's changePassword method which makes sure the user actually input the correct password instead of some random goofiness.
+
+TODO : I want to make the page a little prettier. I'm thinking of hiding the inputs on the left box and just showing the current value with an edit button that then shows the input when clicked.
 
 ### Future Plans:
 - Fully implement the ability to add other people to your household

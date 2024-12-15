@@ -47,21 +47,52 @@ module.exports.updateProfile = async (req, res, next) => {
     const user = req.user;
     const { displayname, email, salary } = req.body;
     if (!displayname && !email && !salary) {
-    req.flash('error', "Please enter updated information!");
-    res.redirect('/profile');
+        req.flash('error', "Please enter updated information!");
+        return res.redirect('/profile');
     }
-    if(displayname) {
-        await User.findByIdAndUpdate(user.id, {displayname});
+    if (displayname) {
+        await User.findByIdAndUpdate(user.id, { displayname });
     }
-    if (email){
-        await User.findByIdAndUpdate(user.id, {email});
+    if (email) {
+        await User.findByIdAndUpdate(user.id, { email });
     }
     if (salary) {
-        await User.findByIdAndUpdate(user.id, {salary});
+        await User.findByIdAndUpdate(user.id, { salary });
     }
 
     req.flash('success', `You've successfully updated your ${displayname ? "real name " : ""}${email ? "email " : ""}${salary ? "salary " : ""}information!`);
     res.redirect('/profile');
+}
+
+module.exports.updatePassword = async (req, res, next) => {
+    oldPassword = req.body.currentPassword;
+    verifyOldPassword = req.body.verifyPassword;
+    newPassword = req.body.password;
+    if (oldPassword !== verifyOldPassword) {
+        req.flash('error', 'Passwords must match!');
+        return res.redirect('/profile');
+    } else if (newPassword === oldPassword) {
+        req.flash('error', 'New password must be different from your old password!');
+        return res.redirect('/profile');
+    } else {
+        User.findByUsername(req.user.username, (err, user) => {
+            if (err) {
+                req.flash('error', err);
+                return res.redirect('/profile');
+            } else {
+                user.changePassword(oldPassword, newPassword, (err => {
+                    if (err) {
+                        console.log(err)
+                        req.flash('error', err);
+                        return res.redirect('/profile');
+                    } else {
+                        req.flash('success', 'Password changed successfully.');
+                        return res.redirect('/profile');
+                    }
+                }))
+            }
+        })
+    }
 }
 
 module.exports.logout = (req, res, next) => {
