@@ -7,12 +7,12 @@ module.exports.renderRegister = (req, res, next) => {
 
 module.exports.createUser = async (req, res, next) => {
     try {
-        const { email, username, password, verifiedPassword } = req.body;
+        const { email, username, displayname, salary, password, verifiedPassword } = req.body;
         if (password !== verifiedPassword) {
             req.flash('error', 'Passwords do not match!');
             return res.redirect('/register');
         }
-        const user = new User({ email, username })
+        const user = new User({ email, username, displayname, salary })
         const registeredUser = await User.register(user, password);
         req.login(registeredUser, err => {
             if (err) return next(err);

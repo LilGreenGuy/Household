@@ -4,7 +4,6 @@ if (process.env.NODE_ENV !== 'production') {
 
 
 const mongoose = require('mongoose');
-const RentItem = require('./models/RentItem');
 const RentYear = require('./models/RentYear');
 const Household = require('./models/Household');
 

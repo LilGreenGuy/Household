@@ -1,28 +1,43 @@
 <% layout('layouts/boilerplate') %>
   <div class="row">
     <div class="col-md-6 offset-md-3 col-xl-4 offset-xl-4">
-      <div class="card shadow p-1 text-white" id="register">
+      <section class="card shadow p-1 text-white" id="register">
         <div class="card-body">
           <h1 class="card-title m-3 text-center">Register</h1>
           <form action="/register" method="POST" class="validated-form" novalidate>
-            <div class="mb-3">
-              <label for="inputEmail" class="form-label">Email</label>
-              <input type="email" class="form-control" id="inputEmail" name="email" required>
+            <div class="form-floating mb-3">
+              <input type="email" class="form-control" id="inputEmail" placeholder="Email" name="email" required autocomplete="off">
+              <label for="inputEmail" class="form-label text-secondary">Email</label>
             </div>
-            <div class="mb-3">
-              <label class="form-label" for="username">Username</label>
-              <input class="form-control" type="text" id="username" name="username" required autofocus>
+            <div class="form-floating mb-3">
+              <input class="form-control" type="text" id="username" placeholder="Username" name="username" required autocomplete="off">
+              <label class="form-label text-secondary" for="username">Username</label>
               <div class="valid-feedback">
                 Looks good!
               </div>
             </div>
-            <div class="mb-3">
-              <label for="password" class="form-label">Password</label>
-              <input type="password" class="form-control" id="password" name="password" required>
+            <div class="form-floating mb-3">
+              <input type="text" class="form-control" id="displayname" placeholder="Real Name" name="displayname" required autocomplete="off">
+              <label class="form-label text-secondary" for="displayname">Real Name</label>
+              <div class="valid-feedback">
+                Looks good!
+              </div>
             </div>
-            <div class="mb-3">
-              <label for="vertifyPassword" class="form-label">Verify Password</label>
-              <input type="password" class="form-control" id="vertifyPassword" name="verifiedPassword" required>
+            <div class="form-floating mb-3">
+              <input type="number" class="form-control" id="salary" placeholder="Net Income" name="salary" required autocomplete="off"> 
+              <label for="salary" class="form-label text-secondary">Net Income</label>
+              <div class="valid-feedback">
+                Looks good!
+              </div>
+              <div id="reasonHelp" class="form-text text-info">Net income is income after taxes, deductions, etc</div>
+            </div>
+            <div class="form-floating mb-3">
+              <input type="password" class="form-control" id="password" placeholder="Password" name="password" required autocomplete="off">
+              <label for="password" class="form-label text-secondary">Password</label>
+            </div>
+            <div class="form-floating mb-3">
+              <input type="password" class="form-control" id="vertifyPassword" placeholder="Verified Password" name="verifiedPassword" required autocomplete="off">
+              <label for="vertifyPassword" class="form-label text-secondary">Verify Password</label>
             </div>
             <div class="col-12 justify-content-end">
               <button class="btn btn-success btn-block mb-3 mt-3 w-100" type="submit">Sign up</button>
@@ -30,7 +45,6 @@
             <p class="pb-0 mb-0">Already have an account? <a href="/login">Login instead</a></p>
           </form>
         </div>
-      </div>
+      </section>
     </div>
   </div>
-  <script src="/js/register.js"></script>
