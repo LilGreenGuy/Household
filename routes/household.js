@@ -13,5 +13,9 @@ router.route('/new')
 
 router.route('/:id')
     .get(isLoggedIn, checkCurrentYear, checkCurrentMonth, isHouseholdUser, catchAsync(household.showHousehold))
+    .put(isLoggedIn, isHouseholdUser, catchAsync(household.updateHousehold))
+
+router.route('/:id/edit')
+    .get(isLoggedIn, checkCurrentYear, checkCurrentMonth, isHouseholdUser, catchAsync(household.renderEditForm))
 
 module.exports = router;

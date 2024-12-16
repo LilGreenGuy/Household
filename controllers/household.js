@@ -22,17 +22,39 @@ module.exports.createHousehold = async (req, res) => {
     household.users.push(user._id);
     household.save();
 
-    res.redirect('/');
+    return res.redirect('/');
 }
 
 module.exports.showHousehold = async (req, res) => {
     const { id } = req.params;
-    const household = await Household.findById(id).populate({path: 'users'});
+    const household = await Household.findById(id).populate({ path: 'users' });
     const rentYears = await RentYear.find({ household });
     const numMonths = rentYears[0].rentMonths.length;
     const householdSalary = household.users.reduce((totalSalary, user) => totalSalary + user.salary, 0);
     const salary = [];
-    for (let i = 0; i < numMonths; i++) salary.push(householdSalary/12);
+    for (let i = 0; i < numMonths; i++) salary.push(householdSalary / 12);
 
-    res.render(`household/show`, { household, salary, rentYears, page_name: "Household" });
+    res.render('household/show', { household, salary, rentYears, page_name: "Household" });
+}
+
+module.exports.renderEditForm = async (req, res, next) => {
+    const { id } = req.params;
+    const household = await Household.findById(id);
+    res.render('household/edit', { household, page_name: 'Edit Household' })
+}
+
+module.exports.updateHousehold = async (req, res, next) => {
+    const { id } = req.params;
+    const household = await Household.findById(id);
+    if (req.body.address) {
+        household.address = req.body.address;
+        household.save();
+        req.flash('success', 'Successfully updated your Household\'s address!');
+        return res.redirect(`/household/${id}`);
+    } else if (req.body.household.name) {
+        household.name = req.body.household.name;
+        household.save();
+        req.flash('success', 'Successfully updated your Household\'s name!');
+        return res.redirect(`/household/${id}`);
+    }
 }

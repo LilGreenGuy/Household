@@ -12,7 +12,7 @@ The background used in the web app is from unsplash. I don't know why I went wit
 
 ### The Household show page is divided into four sections.
 
-The first section is headed with the name of the Household if the user submitted one, otherwise the default is "Home". Then under that, it shows the address of the Household. Over to the right of this container there is Then under that, it shows a graph plotting your current monthly expenses versus your average monthly income based off of your yearly salary. Colors are currently blue for the expenses, and red for the user's salary. Subject to change.
+The first section is headed with the name of the Household if the user submitted one, otherwise the default is "Home". Then under that, it shows the address of the Household. Over to the right of this container there is Then under that, it shows a graph plotting your current monthly expenses versus your average monthly income based off of your yearly salary. Colors are currently blue for the expenses, and red for the user's salary. There is an edit button in the top right that leads to the edit page, which allows users to change the name of their Household as well as change the address of their household.
 
 It then shows the users who are a part of the Household, with an input field to put in an email of someone to add/invite into the Household. NOTE: Not currently finished.
 
