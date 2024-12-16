@@ -17,12 +17,16 @@ module.exports.renderNewForm = (req, res) => {
 
 module.exports.createHousehold = async (req, res) => {
     const user = await User.findOne(req.user);
-    const household = new Household({ name: req.body.household.name });
-    household.address = req.body.address;
-    household.users.push(user._id);
-    household.save();
-
-    return res.redirect('/');
+    if (req.body.household.name) {
+        const household = new Household({ name: req.body.household.name });    
+        household.address = req.body.address;
+        household.users.push(user._id);
+        await household.save();
+        return res.redirect(`/household/${household._id}`);
+    } else {
+        req.flash('error', 'Please submit a name for your Household!')
+        return res.redirect('/');
+    }
 }
 
 module.exports.showHousehold = async (req, res) => {
@@ -48,12 +52,12 @@ module.exports.updateHousehold = async (req, res, next) => {
     const household = await Household.findById(id);
     if (req.body.address) {
         household.address = req.body.address;
-        household.save();
+        await household.save();
         req.flash('success', 'Successfully updated your Household\'s address!');
         return res.redirect(`/household/${id}`);
     } else if (req.body.household.name) {
         household.name = req.body.household.name;
-        household.save();
+        await household.save();
         req.flash('success', 'Successfully updated your Household\'s name!');
         return res.redirect(`/household/${id}`);
     }

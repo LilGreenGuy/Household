@@ -6,7 +6,7 @@ const catchAsync = require('../utils/catchAsync');
 
 router.route('/')
     .get(isLoggedIn, checkHousehold, catchAsync(household.index))
-    .post(isLoggedIn, checkHousehold, catchAsync(household.createHousehold));
+    .post(isLoggedIn, catchAsync(household.createHousehold));
 
 router.route('/new')
     .get(isLoggedIn, household.renderNewForm)
