@@ -1,6 +1,6 @@
 # Household
 
-#### Video demo:
+#### Video demo: https://www.youtube.com/watch?v=SMhkas73A9k&feature=youtu.be
 
 ## Description:
 Welcome to Household. I originally created this project in order to better learn more passport, express.js, and MongoDB and decided a good way to do it would be to make

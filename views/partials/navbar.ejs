@@ -1,7 +1,7 @@
 <nav id="navbar" class="navbar sticky-top navbar-expand-lg navbar-dark">
     <div class="container">
         <a class="navbar-brand" href="#">
-                <img id="logo" class="img-thumbnail" src="/img/household_logo.png" alt="">
+            <img id="logo" class="img-thumbnail" src="/img/household_logo.png" alt="">
         </a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup"
             aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
@@ -9,20 +9,22 @@
         </button>
         <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
             <div class="navbar-nav">
-                <a class="nav-link <%= page_name === "Home" ? "active" : "" %>" href="/">Home</a>
+                <a class="nav-link <%= page_name === " Home" ? "active" : "" %>" href="/">Home</a>
                 <% if(currentUser) {%>
-                <a class="nav-link <%= page_name === "Household" ? "active" : "" %>" href="/household">Household</a>
-                <a class="nav-link <%= page_name === "Living Expenses" ? "active" : "" %>" href="/living-expenses">Living Expenses</a>
-            <% } %>
+                    <a class="nav-link <%= page_name === " Household" ? "active" : "" %>"
+                        href="/household">Household</a>
+                    <a class="nav-link <%= page_name === " Living Expenses" ? "active" : "" %>"
+                        href="/living-expenses">Living Expenses</a>
+                    <% } %>
             </div>
             <div class="navbar-nav ms-auto">
-        <% if(!currentUser) {%>
-          <a class="nav-link <%= page_name === "Login" ? "active" : "" %>" href="/login">Login</a>
-          <a class="nav-link <%= page_name === "Register" ? "active" : "" %>" href="/register">Register</a>
-          <% } else {%>
-            <a class="nav-link" href="/profile">Profile</a>
-            <a class="nav-link" href="/logout">Logout</a>
-            <% } %>
+                <% if(!currentUser) {%>
+                    <a class="nav-link <%= page_name === " Login" ? "active" : "" %>" href="/login">Login</a>
+                    <a class="nav-link <%= page_name === " Register" ? "active" : "" %>" href="/register">Register</a>
+                    <% } else {%>
+                        <a class="nav-link" href="/profile">Profile</a>
+                        <a class="nav-link" href="/logout">Logout</a>
+                        <% } %>
             </div>
         </div>
     </div>
