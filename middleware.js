@@ -30,18 +30,21 @@ module.exports.checkCurrentYear = async (req, res, next) => {
 
 module.exports.checkCurrentMonth = async (req, res, next) => {
     const household = await Household.findOne({ users: req.user._id });
-    const currentMonth = await RentYear.findOne({ 'rentMonths.month': getCurrentMonth() , household: household._id });
+    const months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"]
+    for (let i = 0; i < 12; i++) {
+    const currentMonth = await RentYear.findOne({ 'rentMonths.month': months[i], household: household._id, year: getCurrentYear() });
     if (!currentMonth) {
         const currentYear = await RentYear.findOne({ year: getCurrentYear(), household: household });
         const newMonth = {
             year: getCurrentYear(),
-            month: getCurrentMonth(),
+            month: months[i],
             rentItems: [],
             rentTotal: 0
         }
         currentYear.rentMonths.push(newMonth);
         currentYear.save();
     };
+    }
     return next();
 }
 
@@ -78,14 +81,5 @@ module.exports.isHouseholdUser = async(req, res, next) => {
         req.flash('error', 'You do not have permission to do that!')
         return res.redirect(`/home`)
     }
-    next();
+    return next();
 }
-
-// module.exports.hasHousehold = async(req, res, next) => {
-//     const {id} = req.params;
-//     const household = await Household.findById(id);
-//     if (!household) {
-//         req.flash('error', 'You need to finish creating a Household!')
-
-//     }
-// }

@@ -1,6 +1,6 @@
 const Household = require('../models/Household');
 const RentYear = require('../models/RentYear');
-const User = require('../models/user')
+const User = require('../models/user');
 
 module.exports.index = async (req, res) => {
     const user = req.user;
@@ -32,8 +32,8 @@ module.exports.createHousehold = async (req, res) => {
 module.exports.showHousehold = async (req, res) => {
     const { id } = req.params;
     const household = await Household.findById(id).populate({ path: 'users' });
-    const rentYears = await RentYear.find({ household });
-    const numMonths = rentYears[0].rentMonths.length;
+    const rentYears = await RentYear.find({ household});
+    const numMonths = rentYears[rentYears.length - 1].rentMonths.length;
     const householdSalary = household.users.reduce((totalSalary, user) => totalSalary + user.salary, 0);
     const salary = [];
     for (let i = 0; i < numMonths; i++) salary.push(householdSalary / 12);

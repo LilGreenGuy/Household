@@ -1,20 +1,23 @@
 <% layout('layouts/boilerplate') %>
-        <div class="row">
-            <div class="col-lg-6 col-sm-10 offset-lg-0 offset-sm-1">
-                <div class="card shadow mb-3 text-white bodyCard" id="totalCard">
-                    <div class="card-body">
-                        <% const currentMonth=household.rentYears.at(-1).rentMonths.at(-1) %>
-                        <h2 class="card-title border-bottom pb-3 month"><%=currentMonth.month%>'s Living Expenses</h2>
-                        <h3 class="card-text mb-3">Monthly Total: $<%=currentMonth.rentTotal || 0 %></h3>
+    <div class="row">
+        <div class="col-lg-6 col-sm-10 offset-lg-0 offset-sm-1">
+            <div class="card shadow mb-3 text-white bodyCard" id="totalCard">
+                <div class="card-body">
+                    <% const currentMonth=household.rentYears.at(-1).rentMonths[month] %>
+                        <h2 class="card-title border-bottom pb-3 month">
+                            <%=currentMonth.month%>'s Living Expenses
+                        </h2>
+                        <h3 class="card-text mb-3">Monthly Total: $<%=currentMonth.rentTotal || 0 %>
+                        </h3>
 
                         <div class="accordion" id="currentMonthAccordian">
                             <% if(currentMonth.rentItems) { %>
                                 <% for(let rentItem of currentMonth.rentItems) {%>
                                     <div class="accordion-item">
                                         <h2 class="accordion-header">
-                                            <button class="accordion-button collapsed py-2" type="button" data-bs-toggle="collapse"
-                                                data-bs-target="#collapse<%=rentItem._id %>" aria-expanded="true"
-                                                aria-controls="collapse<%=rentItem._id %>">
+                                            <button class="accordion-button collapsed py-2" type="button"
+                                                data-bs-toggle="collapse" data-bs-target="#collapse<%=rentItem._id %>"
+                                                aria-expanded="true" aria-controls="collapse<%=rentItem._id %>">
                                                 <h5>
                                                     <%=rentItem.reason%>: $<%=rentItem.cost %>
                                                 </h5>
@@ -23,96 +26,108 @@
                                         <div id="collapse<%=rentItem._id %>" class="accordion-collapse collapse"
                                             data-bs-parent="#currentMonthAccordian">
                                             <div class="accordion-body">
-                                                <p><%=rentItem.date %></p>
-                                                    <p><%=rentItem.desc %></p>
+                                                <p>
+                                                    <%=rentItem.date %>
+                                                </p>
+                                                <p>
+                                                    <%=rentItem.desc %>
+                                                </p>
                                             </div>
                                         </div>
                                     </div>
                                     <% } %>
                                         <% } %>
                         </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="col-lg-6 col-sm-10 offset-lg-0 offset-sm-1">
-                <div class="card shadow mb-3 text-white bodyCard" id="inputCard">
-                    <div class="card-body">
-                        <h2 class="card-title border-bottom pb-3">Add New Expense</h2>
-                    </div>
-                    <form action="/living-expenses" method="post" class="px-3 pb-3 validated-form" novalidate>
-                        <div class="form-floating mb-3">
-                            <input type="text" class="form-control" id="reason" aria-describedby="cost reason"
-                                placeholder="Cost Reason" name="rentItem[reason]" required>
-                            <label for="reason" class="form-label text-secondary">Cost Reason</label>
-                            <div id="reasonHelp" class="form-text text-info">Examples: Power Bill, Internet
-                                Bill, etc</div>
-                            <div class="invalid-feedback">Please Enter a Reason!</div>
-                        </div>
-
-                        <div class="form-floating mb-3">
-                            <input type="number" class="form-control" id="costAmount" aria-describedby="Dollar amount"
-                                placeholder="Dollar Amount" name="rentItem[cost]" required>
-                            <label for="costAmount" class="form-label text-secondary">Dollar Amount</label>
-                            <div class="invalid-feedback">Please Enter a Cost</div>
-                        </div>
-
-                        <div class="form-floating mb-3">
-                            <textarea class="form-control" id="costDescription" rows="3" name="rentItem[desc]"
-                                placeholder="Description of Expense" style="height: 7rem;" required></textarea>
-                            <label for="costDescription" class="form-label text-secondary">Description of
-                                Expense</label>
-                                <div class="invalid-feedback">Please Enter a Description!</div>
-                        </div>
-                        <div>
-                            <button type="submit" class="btn btn-primary">Submit</button>
-                        </div>
-                    </form>
                 </div>
             </div>
         </div>
 
-        <div class="row">
-            <div class="col-lg-12 col-sm-10 offset-lg-0 offset-sm-1">
-                <div class="card shadow text-white mt-2  bodyCard" id="historyCard">
-                    <div class="card-body ">
-                        <h2 class="card-title border-bottom pb-2 mb-3">Previous Month Summaries</h2>
-                        <div class="accordion " id="accordion">
-                                <% for(let rentMonth of household.rentYears.at(-1).rentMonths.reverse().slice(1)) {%>
-                                    <div class="accordion-item bg-secondary-subtle">
-                                        <h2 class="accordion-header">
-                                            <button class="accordion-button collapsed py-2" type="button"
-                                                data-bs-toggle="collapse"
-                                                data-bs-target="#flush-collapse<%=rentMonth.month %>"
-                                                aria-expanded="false"
-                                                aria-controls="flush-collapse<%=rentMonth.month %>">
-                                                <h3>
-                                                    <%=rentMonth.month %>: $<%=rentMonth.rentTotal %>
-                                                </h3>
-                                            </button>
-                                        </h2>
-                                        <div id="flush-collapse<%=rentMonth.month %>"
-                                            class="accordion-collapse collapse" data-bs-parent="#accordion">
-                                            <div class="accordion-body">
+        <div class="col-lg-6 col-sm-10 offset-lg-0 offset-sm-1">
+            <div class="card shadow mb-3 text-white bodyCard" id="inputCard">
+                <div class="card-body">
+                    <h2 class="card-title border-bottom pb-3">Add New Expense</h2>
+                </div>
+                <form action="/living-expenses" method="post" class="px-3 pb-3 validated-form" novalidate>
+                    <div class="form-floating mb-3">
+                        <input type="text" class="form-control" id="reason" aria-describedby="cost reason"
+                            placeholder="Cost Reason" name="rentItem[reason]" required>
+                        <label for="reason" class="form-label text-secondary">Cost Reason</label>
+                        <div id="reasonHelp" class="form-text text-info">Examples: Power Bill, Internet
+                            Bill, etc</div>
+                        <div class="invalid-feedback">Please Enter a Reason!</div>
+                    </div>
+
+                    <div class="form-floating mb-3">
+                        <input type="number" class="form-control" id="costAmount" aria-describedby="Dollar amount"
+                            placeholder="Dollar Amount" name="rentItem[cost]" step=".01" required>
+                        <label for="costAmount" class="form-label text-secondary">Dollar Amount</label>
+                        <div class="invalid-feedback">Please Enter a Cost</div>
+                    </div>
+
+                    <div class="form-floating  mb-3">
+                        <input id="costDate" class="form-control" type="date" name="rentItem[date]">
+                        <label class="form-label" for="costDate">Date of Expense</label>
+                    </div>
+
+                    <div class="form-floating mb-3">
+                        <textarea class="form-control" id="costDescription" rows="3" name="rentItem[desc]"
+                            placeholder="Description of Expense" style="height: 7rem;" required></textarea>
+                        <label for="costDescription" class="form-label text-secondary">Description of
+                            Expense</label>
+                        <div class="invalid-feedback">Please Enter a Description!</div>
+                    </div>
+                    <div class="d-flex">
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" value="recurring" id="checkDefault" name="recurring">
+                            <label class="form-check-label" for="checkDefault">
+                                Does this expense reoccur monthly?
+                            </label>
+                        </div>
+                        <button type="submit" class="btn btn-primary ms-auto">Submit</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-lg-12 col-sm-10 offset-lg-0 offset-sm-1">
+            <div class="card shadow text-white mt-2  bodyCard" id="historyCard">
+                <div class="card-body ">
+                    <h2 class="card-title border-bottom pb-2 mb-3">Previous Month Summaries</h2>
+                    <div class="accordion " id="accordion">
+                        <% for(let rentMonth of household.rentYears.at(-1).rentMonths.reverse()) {%>
+                            <div class="accordion-item bg-secondary-subtle">
+                                <h2 class="accordion-header">
+                                    <button class="accordion-button collapsed py-2" type="button"
+                                        data-bs-toggle="collapse" data-bs-target="#flush-collapse<%=rentMonth.month %>"
+                                        aria-expanded="false" aria-controls="flush-collapse<%=rentMonth.month %>">
+                                        <h3>
+                                            <%=rentMonth.month %>: $<%=rentMonth.rentTotal %>
+                                        </h3>
+                                    </button>
+                                </h2>
+                                <div id="flush-collapse<%=rentMonth.month %>" class="accordion-collapse collapse"
+                                    data-bs-parent="#accordion">
+                                    <div class="accordion-body">
+                                        <% for(let rentItem of rentMonth.rentItems) {%>
+                                            <% } %>
                                                 <% for(let rentItem of rentMonth.rentItems) {%>
-                                                        <% } %>
-                                                            <% for(let rentItem of rentMonth.rentItems) {%>
-                                                                <h5 class="d-inline">
-                                                                    <%=rentItem.reason %>: $<%=rentItem.cost %>
-                                                                </h5>
-                                                                <br>
-                                                                <p class="rentDesc">
-                                                                    <%=rentItem.desc %>
-                                                                </p>
-                                                                <% } %>
-                                            </div>
-                                        </div>
+                                                    <h5 class="d-inline">
+                                                        <%=rentItem.reason %>: $<%=rentItem.cost %>
+                                                    </h5>
+                                                    <br>
+                                                    <p class="rentDesc">
+                                                        <%=rentItem.desc %>
+                                                    </p>
+                                                    <% } %>
                                     </div>
-                                    <% } %>
-                        </div>
+                                </div>
+                            </div>
+                            <% } %>
                     </div>
                 </div>
             </div>
         </div>
-        </div>
-        <script src="/js/home.js"></script>
+    </div>
+    </div>

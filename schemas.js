@@ -28,5 +28,7 @@ module.exports.rentItemSchema = Joi.object({
         reason: Joi.string().required().escapeHTML(),
         cost: Joi.number().required().min(0),
         desc: Joi.string().required().escapeHTML(),
-    }).required()
+        date: Joi.string().escapeHTML(),
+    }).required(),
+    recurring: Joi.string()
 })

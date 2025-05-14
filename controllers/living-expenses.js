@@ -1,28 +1,50 @@
-const Household = require('../models/Household')
-const RentYear = require('../models/RentYear')
+const Household = require("../models/Household");
+const RentYear = require("../models/RentYear");
+const { getCurrentYear, getCurrentMonth } = require("../utils/getCurrentDate");
 
 module.exports.renderLivingExpenses = async (req, res) => {
-    const user = req.user;
-    const household = await Household.findOne({ users: user._id }).populate('rentYears');
-    if (!household) {
-        req.flash('error', 'You are not a part of any Household!');
-        return res.redirect('/home');
-    }
+  const user = req.user;
+  const household = await Household.findOne({ users: user._id }).populate(
+    "rentYears"
+  );
+  const month = new Date().getMonth();
+  if (!household) {
+    req.flash("error", "You are not a part of any Household!");
+    return res.redirect("/home");
+  }
 
-    res.render('living-expenses/index', { household, page_name: 'Living Expenses' });
-}
+  res.render("living-expenses/index", {
+    household,
+    month,
+    page_name: "Living Expenses",
+  });
+};
 
 module.exports.createLivingExpense = async (req, res) => {
     const user = req.user;
     const rentItem = req.body.rentItem;
-    console.log(rentItem)
-    const household = await Household.findOne({ users: user._id }).populate('rentYears');
-    let rentYear = await RentYear.find({household});
+  const month = rentItem.date
+    ? new Date(rentItem.date).getMonth()
+      : new Date().getMonth();
+  const household = await Household.findOne({ users: user._id }).populate(
+    "rentYears"
+  );
+  let rentYear = await RentYear.find({ household });
     rentYear = rentYear[rentYear.length - 1];
-    rentYear.rentMonths.at(-1).rentItems.push(rentItem);
-    rentYear.rentMonths.at(-1).rentTotal += parseInt(rentItem.cost);
-    rentYear.yearlyTotal += parseInt(rentItem.cost);
-    await rentYear.save();
+    if (req.body.recurring) {
+        for (let i = 0; i < 12; i++) {
+            rentItem.date = new Date(getCurrentYear(), i)
+            rentYear.rentMonths[i].rentItems.push(rentItem);
+            rentYear.rentMonths[i].rentTotal += parseInt(rentItem.cost);
+            rentYear.yearlyTotal += parseInt(rentItem.cost);
+            console.log(rentItem.date)
+        }
+    } else {
+        rentYear.rentMonths[month].rentItems.push(rentItem);
+        rentYear.rentMonths[month].rentTotal += parseInt(rentItem.cost);
+        rentYear.yearlyTotal += parseInt(rentItem.cost);
+    }
+  await rentYear.save();
 
-    res.redirect('/living-expenses');
-}
+  res.redirect("/living-expenses");
+};
