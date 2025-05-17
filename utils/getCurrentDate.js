@@ -4,7 +4,7 @@ const options = {
 }
 
 module.exports.getCurrentMonth = () => {
-    return new Date().toLocaleString("default", options.month);
+    return new Date().getMonth();
 }
 
 module.exports.getCurrentYear = () => {
