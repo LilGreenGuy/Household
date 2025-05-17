@@ -34,11 +34,12 @@ module.exports.showHousehold = async (req, res) => {
     const household = await Household.findById(id).populate({ path: 'users' });
     const rentYears = await RentYear.find({ household});
     const numMonths = rentYears[rentYears.length - 1].rentMonths.length;
+    const month = new Date().getMonth();
     const householdSalary = household.users.reduce((totalSalary, user) => totalSalary + user.salary, 0);
     const salary = [];
     for (let i = 0; i < numMonths; i++) salary.push(householdSalary / 12);
 
-    res.render('household/show', { household, salary, rentYears, page_name: "Household" });
+    res.render('household/show', { household, month, salary, rentYears, page_name: "Household" });
 }
 
 module.exports.renderEditForm = async (req, res, next) => {

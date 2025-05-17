@@ -38,6 +38,8 @@ The second section allows a user to change their password by taking in a new pas
 
 ### Languages used:
 HTML, CSS, Javascript
+### Backend:
+Node.js
 ### Database used:
 MongoDB
 ### Frameworks used:
@@ -46,7 +48,8 @@ Bootstrap, Express.js
 Embedded JavaScript (EJS)
 
 ### Future Plans:
+- Implement carousel for graphs so they're more readable on small form-factors such as handheld devices
+- Implement carousel for the months on the show page instead of only displaying the current month
 - Fully implement the ability to add other people to your household
 - Have the graph break down the salary bars by color based on each person's salary
-- Implement an edit route for the Household so users can change the name and address of the Household.
 - More robust error checking and security
