@@ -1,55 +1,102 @@
 # Household
 
-#### Video demo: https://www.youtube.com/watch?v=SMhkas73A9k&feature=youtu.be
+#### Video Demo: [Watch on YouTube](https://www.youtube.com/watch?v=SMhkas73A9k&feature=youtu.be)
 
-## Description:
-Welcome to Household. I originally created this project in order to better learn more passport, express.js, and MongoDB and decided a good way to do it would be to make
-an expense tracker for my girlfriend and I to use to track our shared expenses.
+## Description
 
-Household lets users add expenses to their 'Household' every month, such as rent, power bills, etc. There's really two main screens so far, users have an show screen for their Household and they have a screen to add and view whatever various expenses may come up every month. 
+Welcome to Household. I built this project to learn more about Passport, Express.js, and MongoDB, and decided to make an expense tracker that my girlfriend and I could use to track shared costs such as rent, utilities, and other household expenses.
 
-The background used in the web app is from unsplash. I don't know why I went with a random cityscape like I did, maybe budgeting makes me think of being a bigtime CEO in a tall skyscraper? Who knows.
+Household allows users to create a "Household" and log expenses every month. The app currently includes two main pages: a Household overview page and a Living Expenses page. Each is designed to make managing and visualizing shared finances simple and intuitive.
 
-### The Household show page is divided into four sections.
+The background image used in the web app is from Unsplash. I chose a random cityscape—perhaps budgeting makes me feel like a big-time CEO in a tall skyscraper.
 
-The first section is headed with the name of the Household if the user submitted one, otherwise the default is "Home". Then under that, it shows the address of the Household. Over to the right of this container there is Then under that, it shows a graph plotting your current monthly expenses versus your average monthly income based off of your yearly salary. Colors are currently blue for the expenses, and red for the user's salary. There is an edit button in the top right that leads to the edit page, which allows users to change the name of their Household as well as change the address of their household.
+---
 
-It then shows the users who are a part of the Household, with an input field to put in an email of someone to add/invite into the Household. NOTE: Not currently finished.
+## Household Overview Page
 
-After that, it shows a similar summary of the current month's expenses as well as a combined total of them. Has an accordion menu that is clickable which will show the date each item was submitted into the application as well as the description the user submitted with it. There's a button in the bottom right corner that takes the user to a route called living-expenses where they can add more expenses to the month.
+The Household show page is divided into four sections:
 
-Then finally, the last box shows a yearly total for all month's and their expenses in another accordion menu. Clicking on the year will show the individual months and their respectively totals.
+1. **Household Information**  
+   Displays the name and address of the household. If no name is provided, the default name is "Home."  
+   To the right, a graph compares monthly expenses against the user’s average monthly income based on their yearly salary.  
+   The expenses are shown in blue, and income in red.  
+   An "Edit" button in the top right links to the edit page, where users can update their household’s name and address.
 
-### The Living Expenses route/page is divided into three major sections.
+2. **Household Members**  
+   Lists all users who are part of the household.  
+   Includes a field to invite others by email (feature not fully implemented yet).
 
-The first is a summary of the expenses for that month, much like the one on the Household show page. It has a header with the name of the month (in case the user forgets?), the total under that, and then the same accordion menu as on the Household page that displays details such as date/time added, description.
+3. **Current Month Summary**  
+   Displays a summary of all expenses for the current month, including a combined total.  
+   An accordion menu shows the date and description of each expense when expanded.  
+   A button at the bottom right links to the `/living-expenses` route, where users can add more expenses.
 
-The next section is where the user adds a new expense. There's three fields, one is for the name of the reason of the expense, the next is for the dollar amount of the expense, and then the final box is a textarea for the user to type out a more detailed description of the expense.
+4. **Yearly Summary**  
+   Displays total expenses for each year.  
+   Expanding a year in the accordion reveals the individual months and their respective totals.
 
-Finally, under that box is another accordion menu that shows a summary of previous month's expenses, in descending order. Clicking on each month will show the various expenses, including the reason, the cost, and the description.
+---
 
-There's a landing page currently, but it's a pretty basic static text scrawl and nothing incredibly interesting as of right now. 
+## Living Expenses Page
 
-### There is a profile route where users can change their information which is broken into two boxes.
+This page is divided into three sections:
 
-The first section allows a user to change their "Real Name" (which is really just a display name) and their salary. Each of them have the current value under a header with an edit button off to the right side. Once the edit button is clicked, it replaces the current value with a text field for the user to edit the value directly.
+1. **Monthly Summary**  
+   Shows the current month's name and total expenses.  
+   An accordion menu lists each expense along with its details, including the date added and description.
 
-The second section allows a user to change their password by taking in a new password the user desires, their old password, and their old password again to verify they typed it in correctly. It has some checks to make sure the user isn't inputting their old password as a new password. It uses passport's changePassword method which makes sure the user actually input the correct password instead of some random goofiness.
+2. **Add a New Expense**  
+   Provides three input fields:  
+   - Expense name  
+   - Dollar amount  
+   - Description (text area for additional details)
 
-### Languages used:
-HTML, CSS, Javascript
-### Backend:
-Node.js
-### Database used:
-MongoDB
-### Frameworks used:
-Bootstrap, Express.js
-### Templating Language used:
-Embedded JavaScript (EJS)
+3. **Previous Months Summary**  
+   Displays a list of previous months in descending order.  
+   Expanding each month shows a detailed list of expenses with name, amount, and description.
 
-### Future Plans:
-- Implement carousel for graphs so they're more readable on small form-factors such as handheld devices
-- Implement carousel for the months on the show page instead of only displaying the current month
-- Fully implement the ability to add other people to your household
-- Have the graph break down the salary bars by color based on each person's salary
-- More robust error checking and security
+---
+
+## Profile Page
+
+The profile route allows users to manage their personal information. It is divided into two sections:
+
+1. **User Information**  
+   Allows users to edit their display name ("Real Name") and salary.  
+   Clicking "Edit" replaces the static text with editable input fields.
+
+2. **Password Management**  
+   Enables users to change their password by entering the new password, the old password, and a confirmation of the old password.  
+   The system checks that the new password is not identical to the old one.  
+   Password changes are handled securely using Passport’s `changePassword()` method.
+
+---
+
+## Technologies Used
+
+**Languages:**  
+- HTML  
+- CSS  
+- JavaScript
+
+**Backend:**  
+- Node.js  
+- Express.js
+
+**Database:**  
+- MongoDB
+
+**Templating Engine:**  
+- Embedded JavaScript (EJS)
+
+**Frameworks and Libraries:**  
+- Bootstrap  
+- Passport.js
+
+---
+
+## Future Plans
+
+- Implement a carousel for graphs to improve readability on smaller devices.  
+- Implement a carousel for navigating months on the Household page.  
+- Fully implement multi-user households with invitation
